@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% block title %} {{entry.title}} - {{blog.title}} {% endblock %}
+{% block head_block %}
+{% if entry %}
+{%if entry.strtags%}<meta name="Keywords" content="{{entry.strtags}}">{%endif%}
+{%if entry.excerpt%} <meta name="Description" content="{{entry.excerpt}}">{%endif%}
+{% endif %}
+{% endblock %}
+{% block content%}
+<!-- Container -->
+<div class="CON">
+
+<!-- Start SC -->
+<div class="SCS">
+
+{% if entry %}
+
+
+<div class="Post" id="post-{{entry.key}}" style="padding-bottom: 20px;">
+<h2 class="pagetitle"><a title="Permanent Link to {{entry.title}}" href="/{{ entry.link }}" rel="bookmark">{{entry.title}}</a></h2>
+
+
+<small class="PostAuthor">Author: Adam</small>
+<small class="PostCat">In: {%for cate in entry.categories%} <a href="/category/{{cate.slug}}">{{cate.name}}</a> {%endfor%} | {%if self.is_admin%}<a href="{{entry.edit_url}}">Edit</a> | {%endif%}  </small>
+
+
+
+<div class="PostContent">
+{{entry|excerpt_more:"(..More)"}}
+</div>
+
+<div class="PostCom">
+<ul>
+ <li class="Com"><a href="/{{entry.link}}#comments">Comments({{entry.commentcount}})&#187;</a></li>
+ <li class="Tags">{% if entry.strtags %}Tags: {%for tag in entry.tags%}<a href="/tag/{{tag|urlencode}}">{{tag}}</a> {%endfor%}<br><br>{%endif%}</li>
+</ul>
+</div>
+
+</div>
+
+{% include "comments.html" %}
+
+</div> 
+<!-- End SC -->
+{% include "sidebar.html" %}
+{% endif %}
+
+<!-- Container -->
+</div>
+
+{% endblock %}

@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% block title %} {{entry.title}} - {{blog.title}} {% endblock %}
+{% block content%}
+
+<!-- Container -->
+<div class="CON">
+
+<!-- Start SC -->
+<div class="SC">
+
+{% if entry %}
+
+<div class="Post" id="post-{{entry.key}}" style="padding-bottom: 20px;">
+<div class="PostHead">
+<h2><a href="/{{ entry.link }}" rel="bookmark" title="Permanent Link to {{entry.title}}">{{entry.title}}</a></h2>
+<div class="PostTime">
+<strong class="day">{{entry.date|datetz:"d"}} </strong><strong class="month">{{entry.date|datetz:"M"}}</strong><strong class="year">{{entry.date|datetz:"Y"}}</strong>
+</div>
+<small class="PostCat">Filed under: {%for cate in entry.categories%} <a href="/category/{{cate.slug}}">{{cate.name}}</a> {%endfor%} {%if self.is_admin%}<a href="{{entry.edit_url}}">Edit</a>  {%endif%}</small>
+<small class="PostAuthor">Author: Adam</small>
+
+</div>
+  
+<div class="PostContent">
+{{ entry.content }}
+</div>
+<h2>
+	{%if relateposts%}
+                <h4>Relate Posts:</h4>
+                  <ul>
+                {%for post in relateposts%}
+                  <li><a href="/{{post.link}}">{{post.title}}</a></li>
+                {%endfor%}
+                </ul>
+                {%endif%}
+	</h2>			
+ <li class="Tags">{% if entry.strtags %}Tags: {%for tag in entry.tags%}<a href="/tag/{{tag|urlencode}}">{{tag}}</a> {%endfor%}<br><br>{%endif%}</li>
+ 
+ <span class="Note">
+
+
+</span>
+
+{%endif%}
+{% include "comments.html" %}
+</div>
+
+
+
+</div>
+<!-- End SC -->
+{% include "sidebar.html" %}
+</div>
+<!-- End CON -->
+
+
+{% endblock %}

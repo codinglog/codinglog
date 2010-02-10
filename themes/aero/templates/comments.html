@@ -1,0 +1,202 @@
+<script src="/static/js/jquery-1.2.6.min.js"></script>
+<script type="text/javascript" src="/static/js/jquery.cookie.js"></script>
+
+	<br/>
+	<h2 id="comments">{{entry.comments.count}} Responses to &#8220;{{entry.title}}&#8221;
+{% if entry.allow_comment %}
+	         <a href="#commentform" title="Leave a comment">&raquo;</a>
+{% endif %}
+	</h2>
+
+
+{% if entry.comments.count%}
+
+	<ul id="commentlist">
+
+	{% for comment in comments %}
+	         <li>
+	         <!--Change the gravatar size by replacing '70' with bigger resp. smaller sizes-->
+                 <div class="authorcomm">
+                 {% if comment.weburl %}
+                 <a href="{{comment.weburl}}" >	         
+                 <img height="50" width="50" class="avatar" src="{{comment.gravatar_url}}" alt="{{comment.author}}"/></a>
+                 {% else %}
+                 <img height="50" width="50" class="avatar" src="{{comment.gravatar_url}}" alt="{{comment.author}}"/>
+                 {% endif %}
+                 
+                 {% if comment.weburl %}
+                 <a href="{{comment.weburl}}" >{{comment.author}}</a>
+                 {% else %}
+                 {{comment.author}}
+                 {% endif %}
+                 </div>
+                 
+	         {{comment.content}}
+
+	         <div class="meta">{{comment.date.date|datetz:"Y-m-d"}} at {{comment.date|datetz:"H:i"}}</div>
+	         </li>
+
+	{%endfor%}
+	
+            <div id='ajax'></div>
+
+	</ul><!--end of commentlist-->
+
+{% if comments_nav.nav %}
+<div  class='comment_nav' style='text-align:center;'>
+{{comments_nav.nav}}
+</div>
+{% endif %}
+
+
+{%endif%}
+
+
+{% if entry.allow_comment %}
+	<h2 id="postcomment">Leave a comment</h2>
+
+	         <form action="/post_comment" method="post" id="commentform">
+
+	         <p><input type="text" name="author" id="author" value="{{user_name}}" size="22" tabindex="1" />
+	         <label for="author"><small>Name(<span style="color:red;">*</span>required)</small></label></p>
+
+	         <p><input type="text" name="email" id="email" value="{{user_email}}" size="22" tabindex="2" />
+	         <label for="email"><small>Mail (will not be published)(<span style="color:red;">*</span>required)</small></label></p>
+
+	         <p><input type="text" name="url" id="url" value="{{user_url}}" size="22" tabindex="3" />
+	         <label for="url"><small>Website</small></label></p>
+	         
+	         <p id="checkarea"><span style="color:red" id="disp_check">{{checknum1}}+{{checknum2}}=</span>
+           <input type="hidden" name="checknum" id="checknum" value="{{checknum1}}+{{checknum2}}" />
+           <input type="text" name="checkret" id="checkret" value="" size="5" tabindex="4" />
+           <span style="color:red;">*</span></p>
+
+	         <p><textarea name="comment" id="comment" cols="100%" rows="10" tabindex="4"></textarea></p>
+
+	         <p><input name="submit" type="submit" id="submit" tabindex="5" value="Submit Comment" />
+           <input type="hidden" name="key" value="{{entry.key}}"/>
+           <input type="hidden" name="useajax" value="1" /></p>
+            <div id="alter" class="alter" style="display:none">Submitting...</div>
+
+	         </form>
+
+
+{% else %}
+<div class="error">
+<p style="text-align:center; font-size:large; color:red; ">Sorry, the comment form is closed at this time.</p>
+</div>
+{% endif %}
+
+<script type="text/javascript" src="/static/js/jquery.form.utf8.js"></script>
+<script>
+       loadjs=false;
+
+       commentuser=$.cookie('comment_user');
+       if (commentuser)
+       {
+         [user,email,url]=commentuser.split('#@#');
+         $('#author').val(user);
+         $('#email').val(email);
+         $('#url').val(url);
+         $('#checkarea').hide();
+       }
+       else
+       {
+       	num1=Math.round(Math.random()*10);
+       	num2=Math.round(Math.random()*10);
+       	$('#checkarea #checknum').val(num1+'+'+num2);
+       	$('#checkarea #disp_check').text(num1+'+'+num2+'=');
+       	$('#checkarea').show();
+       }
+
+       function showinfo(msg)
+       {
+       	  alert(msg);
+       }
+       function add_comment(msg)
+       {
+       	  comment=$(msg)
+       	  if (!loadjs)
+       	  {
+       	  	$("#ajax").prepend(comment).show();
+       	  	$.getScript("/static/js/jquery.color.js", function(){
+       	  		 comment.animate( { backgroundColor: 'red' }, "slow")
+       						.animate( { backgroundColor: 'white' }, "slow")
+							loadjs=true;
+						});
+       	  }else
+       	  {
+       	  	$("#ajax").prepend(comment);
+       	  	  comment.animate( { backgroundColor: 'red' }, "slow")
+       						.animate( { backgroundColor: 'white' }, "slow")
+
+       	  }
+       }
+
+              $('#commentform').ajaxForm({
+              	type:'post',
+              	dataType:  'json',
+              	beforeSubmit:function(formData,jqForm,options){
+              		   var form = jqForm[0];
+              		   if (form.author)
+              		   {
+
+	              			 if (!form.author.value)
+		              		 {
+		              		  showinfo('Your name please!');
+		              		  form.author.focus();
+		              		  return false;
+		              		 }
+		              		 if (!form.email.value)
+		              		 {
+		              		 	showinfo('Your email address please!');
+		              		 	form.email.focus();
+		              		 	return false;
+		              		 }
+           		       }
+           		        if ($('#checkarea').css('display')!='none')
+								       {
+							             if(eval(form.checknum.value)!=form.checkret.value)
+							             {
+							               alert('Check code error!');
+							               form.checkret.value='';
+							               form.checkret.focus();
+							               return false;
+							             }
+
+							           }
+
+                  		 if (!form.comment.value)
+                  		 {
+                  		 	showinfo('Please leave me some messages!');
+                  		 	form.comment.focus();
+                  		 	return false;
+                  		 }
+
+                  		 $('#alter').text('Submitting...').show();
+                        $("#submit").attr('disabled',true);
+
+	              		 return true;
+
+              		},
+              	success:function(data){
+                    $("#submit").attr('disabled',false);
+              		  if (data[0])
+              		  {
+              		  	/*document.cookie=data[2];*/
+              		  	add_comment(data[1]);
+            		  	$('#alter').text('Your message was submitted successfully!');
+              		  	$('#ajax').val('');
+                        location="#cajax";
+              		  }
+              		  else
+              		  {  if (data[1]==-102)
+              		  	 showinfo('Check code error!');
+              		  	 $('#alter').text('Failed to submit your message!');
+              		  	 $('#checkret').focus();
+
+              		  }
+              		}
+              });
+
+</script>

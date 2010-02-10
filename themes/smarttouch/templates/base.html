@@ -1,0 +1,175 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head profile="http://gmpg.org/xfn/11">
+<title>{% block title %} {{ blog.title}}{% endblock %}</title>
+<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta name="verify-v1" content="xcAhAxcmF/ERUzTviBSwxZP1Y8SuCSOvQlh3XinaMSk=" />
+<link rel="stylesheet" href="/themes/{{ blog.theme_name }}/style.css" type="text/css" media="screen" />
+<link rel="alternate" type="application/rss+xml" title="{{ blog.title }} RSS Feed" href="{{ blog.feedurl }}" />
+<link href="/static/wlwmanifest.xml" type="application/wlwmanifest+xml" rel="wlwmanifest"/>
+<link rel="pingback" href="/pingback" />
+<script type="text/javascript" src="/static/js/jquery-1.2.6.min.js"></script>
+{% block head_block %}{% endblock %}
+
+
+
+</head>
+
+<body>
+
+<div id="bgcontainer">
+  <!-- START Header -->
+  <div class="Header">
+<div class="Syn">
+ <ul>
+  <li><a href="{{blog.feedurl}}">(RSS)</a></li>
+ </ul>
+</div>
+    <div class="Logo">
+      <div class="LogoText">
+        <h1><a href="{{blog.baseurl}}/">{{blog.title}}</a></h1>
+      </div>
+      <p class="Desc">{{blog.blognotice|escape}}</p>
+    </div>
+    <div class="Menu">
+      <ul>
+        <li class="{%if ishome%}current_page_item{%else%}page_item{%endif%}" >
+			<a  href="{{ blog.baseurl }}"  >Home</a>
+		</li>
+		{{self.m_list_pages}}
+    
+    {% block topmenu %}{% endblock %}
+	{%if self.is_admin%}
+     <li><a href="/admin">Admin</a> </li>
+    {%endif%}
+      <li>
+     {%if self.is_login%}
+
+       <a href="{{self.logouturl}}">Logout</a>
+
+     {%else%}
+       <a href="/admin">Login</a>
+
+     {%endif%}
+         </li>
+      </ul>
+    </div>
+    
+    <!-- Start Search -->
+    <div class="Search">
+	
+	<form method="get" id="searchform" action="http://www.inoadam.com/search">
+		<input type="hidden" name="cx" value="014375076349946330221:qrxf-buertq" />
+        <input type="hidden" name="cof" value="FORID:11" />
+		<input type="hidden" name="ie" value="UTF-8" />
+		<input type="text" class="keyword" value="You Deserve MORE!" onfocus="if (this.value == 'You Deserve MORE!') {this.value = '';}" onblur="if (this.value == '') {this.value = 'You Deserve MORE!';}" name="as_q" id="s" />
+		<div class="bt">
+		<input type="image" src="/themes/{{ blog.theme_name }}/images/search_butt.gif" id="go" alt="Search" title="Search" />
+		</div>
+		</form>
+<script type="text/javascript" src="http://www.google.com/coop/cse/brand?form=cse-search-box&lang=en"></script>
+
+
+    </div>
+    <!-- End Search -->
+
+    <div class="clr"></div>
+	
+	
+	
+  </div>
+  <!-- END Header -->
+  
+
+  {%block content %}{%endblock%}
+  </div>
+  
+
+  
+  
+
+<div class="FBG">
+  <!-- Start Recent Comments/Articles -->
+  <div class="Recent">
+    <div class="TabContent">
+      <h2 class="TabLink"><span>Recent Articles</span></h2>
+      <ul>
+        {% for entry in blog.recentposts %}
+		<li><a href="/{{entry.link|escape}}" title="{{entry.title|escape}}" style="text-decoration: none;">{{entry.title|escape}}({{entry.readtimes}})</a></li>
+        {%endfor%}
+      </ul>
+    </div>
+    <div class="TabContent">
+      <h2 class="TabLink"><span>Recent Comments</span></h2>
+      <ul>
+        {% for comment in recent_comments %}
+        <li><a href="/{{comment.entry.link}}#comment-{{comment.key.id}}" style="text-decoration: none;" >{{comment.author}}:</a> {{comment.shortcontent}}...</li>
+        {%endfor%}
+      </ul>
+    </div>
+    <!-- Start Flickr Photostream -->
+
+    <!-- End Flickr Photostream -->
+    <div class="clr"></div>
+  </div>
+  <!-- End Recent Comments/Articles -->
+  <div class="Footer">
+<big><big><strong>&copy; 2009 {{blog.title}}</strong></big></big><br>
+<!-- FOOTER CREDITS LINK -->			
+<small><strong><a href="http://www.freethemelayouts.com/" style="color: #000000;text-decoration: none;">Wordpress Theme</a> designed by DT <a href="http://www.dreamtemplate.com" style="color: #000000;text-decoration: none;">Website Templates</a>Powered by <a href="http://code.google.com/appengine/" rel="nofollow" style="text-decoration: none;" >Google App Engine</a> And<a href="http://xuming.net" style="text-decoration: none;"  > Micolog</a>  And Modified By <a href="http://www.inoadam.com" style="text-decoration: none;"  >Adam</a></strong></small>
+  </div>
+</div>
+
+
+<script type=¡±text/javascript¡± src=¡±/themes/{{ blog.theme_name }}/javascript/Silverlight.js¡±>
+</script>
+<script type="text/javascript">
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+
+var pageTracker = _gat._getTracker("UA-1102991-14");
+$(function() {
+pageTracker._trackPageview();
+var version = getSilverlightVersion();
+if (version) { pageTracker._setVar(version); }
+
+
+
+function getSilverlightVersion() {
+var version = '';
+var container = null;
+ 
+try {
+var control = null;
+if (window.ActiveXObject) {
+control = new ActiveXObject('AgControl.AgControl');
+}
+else {
+if (navigator.plugins['Silverlight Plug-In']) {
+container = document.createElement('div');
+document.body.appendChild(container);
+container.innerHTML= '<embed type="application/x-silverlight" src="data:," />';
+control = container.childNodes[0];
+}
+}
+if (control) {
+if (control.isVersionSupported('3.0')) { version = 'Silverlight/3.0'; }
+else if (control.isVersionSupported('2.0')) { version = 'Silverlight/2.0'; }
+else if (control.isVersionSupported('1.0')) { version = 'Silverlight/1.0'; }
+}
+}
+catch (e) { }
+if (container) {
+document.body.removeChild(container);
+}
+return version;
+}
+
+})
+
+</script>
+</body>
+</html>

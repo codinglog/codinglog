@@ -1,0 +1,21 @@
+	         <li>
+	         <!--Change the gravatar size by replacing '70' with bigger resp. smaller sizes-->
+                 <div class="authorcomm">
+                 {% if comment.weburl %}
+                 <a href="{{comment.weburl}}" >	         
+                 <img height="50" width="50" class="avatar" src="{{comment.gravatar_url}}" alt="{{comment.author}}"/></a>
+                 {% else %}
+                 <img height="50" width="50" class="avatar" src="{{comment.gravatar_url}}" alt="{{comment.author}}"/>
+                 {% endif %}
+                 
+                 {% if comment.weburl %}
+                 <a href="{{comment.weburl}}" >{{comment.author}}</a>
+                 {% else %}
+                 {{comment.author}}
+                 {% endif %}
+                 </div>
+                 
+	         {{comment.content}}
+
+	         <div class="meta">{{comment.date.date|datetz:"Y-m-d"}} at {{comment.date|datetz:"H:i"}}</div>
+	         </li>

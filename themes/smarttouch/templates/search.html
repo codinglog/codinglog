@@ -1,0 +1,274 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<title>{% block title %} {{ blog.title}}{% endblock %}</title>
+<link rel="stylesheet" href="/themes/{{ blog.theme_name }}/style.css" type="text/css" />
+<link rel="alternate stylesheet" type="text/css" media="screen" title="water-theme" href="/themes/{{ blog.theme_name }}/water.css" />
+<link rel="alternate stylesheet" type="text/css" media="screen" title="life-theme" href="/themes/{{ blog.theme_name }}/life.css" />
+<link rel="alternate stylesheet" type="text/css" media="screen" title="earth-theme" href="/themes/{{ blog.theme_name }}/earth.css" />
+<link rel="alternate stylesheet" type="text/css" media="screen" title="wind-theme" href="/themes/{{ blog.theme_name }}/wind.css" />
+<link rel="alternate stylesheet" type="text/css" media="screen" title="fire-theme" href="/themes/{{ blog.theme_name }}/fire.css" />
+
+<link rel="alternate" type="application/atom+xml" title="{{ blog.title }}" href="{{ blog.feedurl }}" />
+<link href="/static/wlwmanifest.xml" type="application/wlwmanifest+xml" rel="wlwmanifest"/>
+<link rel="icon" type="image/ico" href="/favicon.ico">
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.2.6/jquery.min.js"></script>
+<link rel="pingback" href="/pingback" />
+
+<!-- IE6 Specific Fixes -->
+  <!--[if gte IE 5.5]>
+    <![if lt IE 7]>
+      <style type="text/css">
+       @import url("/themes/{{ blog.theme_name }}/ie6style.css");
+       .SMsub ul li a:hover{background:#D4EEFC;}
+       .SMsgb A {display:block;}
+       .SMsgb A:hover{background:#D4EEFC;}
+       .SMRtPoCom {cursor:hand;cursor:pointer;background:none;}
+        #menuspan {
+          position: absolute; left: 0px; bottom: 0px;
+        }
+
+        div#menuspan {
+          right: auto; bottom: auto;
+          left: expression( ( -0 - menuspan.offsetWidth + ( document.documentElement.clientWidth ? document.documentElement.clientWidth : document.body.clientWidth ) + ( ignoreMe2 = document.documentElement.scrollLeft ? document.documentElement.scrollLeft : document.body.scrollLeft ) ) + 'px' );
+          top: expression( ( -0 - menuspan.offsetHeight + ( document.documentElement.clientHeight ? document.documentElement.clientHeight : document.body.clientHeight ) + ( ignoreMe = document.documentElement.scrollTop ? document.documentElement.scrollTop : document.body.scrollTop ) ) + 'px' );
+        }
+        div#StartMenu {
+          /*right: auto; bottom: auto; */
+          right: expression( ( -0 - StartMenu.offsetWidth + ( document.documentElement.clientWidth ? document.documentElement.clientWidth : document.body.clientWidth ) + ( ignoreMe2 = document.documentElement.scrollLeft ? document.documentElement.scrollLeft : document.body.scrollLeft ) ) + 'px' );
+          top: expression( ( -30 - StartMenu.offsetHeight + ( document.documentElement.clientHeight ? document.documentElement.clientHeight : document.body.clientHeight ) + ( ignoreMe = document.documentElement.scrollTop ? document.documentElement.scrollTop : document.body.scrollTop ) ) + 'px' );
+        }
+        #sidebar{background:none;border-left:1px #888 solid;}
+      </style>
+    <![endif]>
+  <![endif]-->
+  
+<script>
+  var templatedir = "/themes/{{ blog.theme_name }}";
+</script>
+
+<script src="/themes/{{ blog.theme_name }}/js/uncompressed_functions.js" type="text/javascript"></script>
+{% block head_block %}{% endblock %}
+</head>
+<body id="bdy">
+
+
+
+<div id="cse-search-results"></div>
+<script type="text/javascript">
+  var googleSearchIframeName = "cse-search-results";
+  var googleSearchFormName = "cse-search-box";
+  var googleSearchFrameWidth = 600;
+  var googleSearchDomain = "www.google.com";
+  var googleSearchPath = "/cse";
+</script>
+<script type="text/javascript" src="http://www.google.com/afsonline/show_afs_search.js"></script>
+
+
+
+
+
+<div class="clear"><!-- Req'd for IE! --></div>
+
+
+
+
+<div class="clear"></div>
+
+<div id="StartMenu">
+  <div class="SMTop"><img src="/themes/{{ blog.theme_name }}/images/1pxtrans.gif" alt=" " /></div>
+  <div class="SMMiddle">
+    <div class="SMsub">
+      <ul>
+        <li onclick="SMRaise(1);">
+          <a href="javascript: void(0)">
+          <img src="/themes/{{ blog.theme_name }}/images/categories_32.png" alt=" " />
+          <b>Categories</b><br />
+          Show category details...
+          </a>
+        </li>
+        <li onclick="SMRaise(2);">
+          <a href="javascript: void(0)">
+          <img src="/themes/{{ blog.theme_name }}/images/tags_32.png" alt=" " />
+          <b>Tag Cloud</b><br />
+          Show the Tag Cloud...
+          </a>
+        </li>
+        <li>
+          <a href="{{ blog.feedurl }}">
+          <img src="/themes/{{ blog.theme_name }}/images/feed_32.png" alt=" " />
+          <b>Blog RSS</b><br />
+          Follow the Blog RSS...
+          </a>
+        </li>
+		<li onclick="SMRaise(4);">
+          <a href="javascript: void(0)">
+          <img src="/themes/{{ blog.theme_name }}/images/comments_32.png" alt=" " />
+          <b>Comments</b><br />
+          Comments...
+          </a>
+        </li>
+        
+      </ul>
+      <div class="SMsgbhr"><img src="/themes/{{ blog.theme_name }}/images/smhrlt.png" alt=" " /></div>
+      <div class="SMsgb" onclick="SMRaise(3);"><a href="javascript:void(0);"><img src="/themes/{{ blog.theme_name }}/images/smfwd.png" alt=" " />Recent Posts</a></div>
+      <div id="SMSearchForm">{% include "sm_searchform.html" %}</div>
+    </div>
+    
+    <div class="SMsub SMsh" id="SMSub1">
+      <div class="SMSubDiv" style="padding:0;margin:4px 0 0 4px;">
+        <div class="SMCats"><ul>{%for cate in categories%}
+      <li>	<a href="/category/{{cate.slug}}">{{cate.name}}({{cate.count}})</a></li>
+ 	  {%endfor%}</ul></div>
+        <div class="SMsgbhr"><img src="/themes/{{ blog.theme_name }}/images/smhrlt.png" alt=" " /></div>
+        <div class="SMsgb" onclick="SMLower(1);"><a href="javascript:void(0);"><img src="/themes/{{ blog.theme_name }}/images/smback.png" alt=" " />Back</a></div>
+      </div>
+    </div>
+    
+    <div class="SMsub SMsh" id="SMSub2">
+      <div class="SMSubDiv" style="padding:0;margin:4px 0 0 4px;">
+          <div class="SMTags SMCats">
+            {% for t in alltags %}
+<a title="{{ t.tagcount }} pages" href="/tag/{{t.tag|urlencode}}"><span style='font-size:{{ t.tagcount|add:9 }}px;'>{{t.tag}}</span></a>
+{%endfor%}
+          </div>
+        <div class="SMsgbhr"><img src="/themes/{{ blog.theme_name }}/images/smhrlt.png" alt=" " /></div>
+        <div class="SMsgb" onclick="SMLower(2);"><a href="javascript:void(0);"><img src="/themes/{{ blog.theme_name }}/images/smback.png" alt=" " />Back</a></div>
+      </div>
+    </div>
+    
+    <div class="SMsub SMsh" id="SMSub3">
+      <div class="SMSubDiv SMap">
+          <ul>{% for entry in blog.recentposts %}
+		<li><a href="/{{entry.link|escape}}" title="{{entry.title|escape}}">
+		{{entry.title|escape}}({{entry.readtimes}})</a></li>
+        {%endfor%}</ul>
+        <div class="SMsgbhr"><img src="/themes/{{ blog.theme_name }}/images/smhrlt.png" alt=" " /></div>
+        <div class="SMsgb" onclick="SMLower(3);"><a href="javascript:void(0);"><img src="/themes/{{ blog.theme_name }}/images/smback.png" alt=" " />Back</a></div>
+      </div>
+    </div>
+	
+	<div class="SMsub SMsh" id="SMSub4">
+      <div class="SMSubDiv SMap">
+          <ul>{% for comment in recent_comments %}
+        <li><a href="/{{comment.entry.link}}#comment-{{comment.key.id}}">{{comment.author}}:</a>        {{comment.shortcontent}}...</li>
+        {%endfor%}</ul>
+        <div class="SMsgbhr"><img src="/themes/{{ blog.theme_name }}/images/smhrlt.png" alt=" " /></div>
+        <div class="SMsgb" onclick="SMLower(4);"><a href="javascript:void(0);"><img src="/themes/{{ blog.theme_name }}/images/smback.png" alt=" " />Back</a></div>
+      </div>
+    </div>
+        
+    <div class="SMRight">
+    <div class="SMAvatarB"><img src="/themes/{{ blog.theme_name }}/images/1pxtrans.gif" alt=" " /></div>
+    
+    
+    <div class="SMAvatar">
+      <img  src="/themes/{{blog.theme_name }}/images/avatar.jpeg" alt=" " />
+    </div>
+
+    
+      
+      <div class="SMRtDiv">
+	  ad
+      </div>
+	  
+       
+    
+    
+    
+    <div class="clear"></div>
+    
+    
+      
+      <div class="SMAdmin">
+	  {%if self.is_admin%}
+	  <a class="SMRtHov" href="/admin" title="Site Admin"><span>Site Admin</span></a>
+	  {%endif%}
+      {%if self.is_login%}
+      <a class="SMRtHov" href="{{self.logouturl}}" title="Logout"><span>Logout</span></a>
+      {%else%}
+      <a class="SMRtHov" href="/admin" title="Login"><span>Login</span></a>
+     {%endif%}
+      </div>
+      
+      <div class="SMRtPoCom" onclick="SMFlot(5);">Change Theme...</div>
+      
+      <div class="liload">
+      
+
+      </div>
+    </div>
+
+    <div class="SMRtPoComFl SMsh" onclick="FlyOutWasClicked=1;" id="SMSub4">
+      <ul class="SMRtFlOpt SMRtFlOptInd">
+        
+
+      </ul>
+    </div>
+
+
+	
+	
+	<div class="SMRtOptsFl SMsh" onclick="FlyOutWasClicked=1;" id="SMSub5">
+    <div class="SMRtFlHd">Change Theme...</div>
+    <ul class="SMRtFlOpt">
+      {% include "changestyle.html" %}
+      
+    </ul>
+  </div>
+	
+	
+	
+	
+	
+	
+
+  </div>
+  <div class="SMBottom"><img src="/themes/{{ blog.theme_name }}/images/1pxtrans.gif" alt=" " /></div>
+</div>
+
+{% include "effects.html" %}
+    
+    <div id="menuspan" class="mnusp">
+      <div class="menu">
+        <div class="nvtl"><ul><li onclick="OClkd();"><a><span>- O -</span></a></li></ul></div>
+        <!-- Quick Launch -->
+        <div class="menu-sep"><img src="/themes/{{ blog.theme_name }}/images/1pxtrans.gif" alt=" " /></div>
+              
+        <div class="nav"><ul>
+        <li class="current_page_item_tb" ><a href="http://www.inoadam.com">Home</a></li>
+        <li class="current_page_item_tb" >{{self.m_list_pages}}</li>
+
+		</ul> 
+		
+		
+		
+        </div>
+		
+        
+        <div class="clock">
+          <span id="clockhr">&nbsp;</span>:<span id="clockmin">&nbsp;</span>&nbsp;<span id="clockpart">&nbsp;</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="clear"></div>
+    <div class="footer"><img src="/themes/{{ blog.theme_name }}/images/1pxtrans.gif" alt=" " /></div>
+    <script type="text/javascript">
+      document.getElementById('menuspan').style.zIndex = "10";
+      document.getElementById('StartMenu').style.zIndex = "10";
+    </script>
+	
+	{% include "ga.html" %}
+	
+  </body>
+</html>
+
+
+
+
+
+
+

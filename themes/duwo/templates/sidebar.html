@@ -1,0 +1,103 @@
+<div id="sidebar">
+    <div class="top"></div>
+   
+    <div class="sbar_a">
+        <ul>
+            <li class="categories"><h3>文章分类</h3>
+                <ul>
+                {% for cate in categories %}
+                    <li><a href="/category/{{cate.slug}}">{{cate.name}} ({{cate.count}})</a></li>
+                {%endfor%}
+                </ul>
+            </li>
+
+            <li class="categories"><h3>热门文章</h3>
+                <ul>
+                {% for entry in blog.hotposts %}
+                    <li><a href="/{{entry.link}}">{{entry.title|escape}}({{entry.readtimes}})</a></li>
+                {%endfor%}
+                </ul>
+            </li>
+
+
+            <li class="categories"><h3>最新文章</h3>
+                <ul>
+                {% for entry in blog.recentposts %}
+                    <li><a href="/{{entry.link}}">{{entry.title|escape}}({{entry.readtimes}})</a></li>
+                {%endfor%}
+                </ul>
+            </li>
+            
+            <li class="categories"><h3>推荐链接</h3>
+                <ul>
+                {% for link in blogroll %}
+                    <li><a href="{{link.href}}">{{link.linktext}}</a></li>
+                {%endfor%}
+                </ul>
+            </li>
+        </ul>
+    </div>
+
+    <div class="sbar_b">
+        <div class="feed-rss">
+            <p><a href="/feed"><span>All Posts RSS</span></a></p>
+            <p><a href="/feed"><span>All Posts Atom</span></a></p>
+            <p><a href="/feed"><span>Comments RSS</span></a></p>
+            <p><a href="http://feeds2.feedburner.com/codinglog">
+<img width="88" height="26" alt="" style="border: 0pt none ;" src="http://feeds2.feedburner.com/~fc/virushuo?bg=99CCFF&fg=444444&anim=0"/>
+</a>
+</p>
+        </div>
+        <ul>
+            <li><h3>最新评论</h3>
+                <ul class="comments">
+                {% for comment in recent_comments %}
+                    <li><a
+                        href="/{{comment.entry.link}}#comment-{{comment.key.id}}">{{comment.shortcontent}}...</a></li>
+                {%endfor%}
+                </ul>
+            </li>
+        </ul>
+        
+        <ul>
+            <li><h3>其他</h3>
+                <ul id="langpref">
+        
+<script>
+
+    function loginp()
+    {
+       $.getJSON("/do/info_login", function(ret){
+              if( ret.islogin)
+              {
+                  html='<li><a href="{{self.logouturl}}">注销</a></li>';
+                if (ret.isadmin)
+                html+=' <li><a href="/admin">管理</a></li>';
+                $('#langpref').html(html);
+$('#loading').html('');
+              }
+              else
+              {$('#langpref').html('<li><a href="/admin"> 登录</a></li>');}
+$('#loading').html('');
+       });
+    }
+    loginp();
+</script>
+		</ul>
+		<ul style="margin-top:-2px;padding-top:0;">
+ 
+                </ul>
+            </li>
+        </ul>
+                                                                  
+        <ul>
+            <li><h3>Tags</h3>
+                {% for t in alltags %}
+                <a href="/tag/{{t.tag|urlencode}}" title='{{ t.tagcount }} pages'><span style='font-size:{{ t.tagcount|add:9 }}px;'>{{t.tag}}</a>
+                {%endfor%}
+            </li>
+        </ul>
+    </div>
+  
+    <div class="bottom"></div>
+</div>

@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+{% block title %} {{category.name}} - {{blog.title}} {% endblock %}
+{% block content%}
+<!-- Container -->
+<div class="CON">
+
+<!-- Start SC -->
+<div class="SC">
+
+{% if entries %}
+<h2 class="pagetitle">Category:{{category.name}}</h2>
+
+
+
+
+{% for entry in entries %}
+<div class="Post" id="post-{{entry.key}}" style="padding: 15px 0px;">
+<div class="PostHead" style="margin-left: 0px;">
+<h3><a title="Permanent Link to {{entry.title}}" href="/{{entry.link}}" rel="bookmark">{{entry.title}}</a></h3>
+<small class="PostAuthor">By: Adam.L on: {{entry.date|datetz:"Y-m-d"}}</small>
+<small class="PostCat">In: {{category.name}}</small>
+</div>
+
+<div class="PostContent" style="padding-top:0px;">
+{{entry|excerpt_more:"(..More)"}}
+</div>
+
+<div class="PostCom">
+<ul>
+ <li class="Com"><a href="/{{entry.link}}#comments">Comments({{entry.commentcount}})&#187;</a></li>
+ <li class="Tags">{% if entry.strtags %}Tags: {%for tag in entry.tags%}<a href="/tag/{{tag|urlencode}}">{{tag}}</a> {%endfor%}<br><br>{%endif%}</li>
+</ul>
+</div>
+
+</div>
+{% endfor %}
+
+<!-- Start Nav -->
+<div class="box">
+<div class="alignleft">{% if show_next %}<a href="/page/{{ pageindex|add:"1" }}">&laquo; Older Entries</a>{%endif%}</div>
+<div class="alignright">{% if show_prev %}<a href="/page/{{ pageindex|add:"-1" }}">&laquo; Newer Entries</a>{%endif%}</div>
+<div class="clear"></div></div>
+<!-- End Nav -->
+
+{% else %}
+<h2>Not Found</h2>
+<p>Sorry, but you are looking for something that isn't here.</p>
+
+{% endif %}
+</div>
+<!-- End SC -->
+{% include "sidebar.html" %}
+
+<!-- Container -->
+</div>
+{% endblock %}

@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% block title %} {{entry.title}} - {{blog.title}} {% endblock %}
+{% block content%}
+{% if entry %}
+
+<div class="datecomrap">
+
+<div class="date">
+{{entry.date|datetz:"M"}}<br />
+<span style="font-size:2em; font-weight:bold;">{{entry.date|datetz:"d"}}</span><br />
+{{entry.date|datetz:"Y"}}
+</div><!-- end date -->
+
+         <!-- if you don't want the comment count left of the post, erase from here ... -->
+         <div class="commy">
+         <a href="/{{ entry.link }}#comments" rel="comments" title="{{entry.comments.count}} comments and {{entry.readtimes}} views">{{entry.comments.count}}</a>    
+         </div><!-- end commy -->
+         <!-- to here -->
+
+
+</div><!-- end datecomrap -->
+
+     <div class="storywrap">
+
+<div class="post" id="post-{{entry.key}}">
+         <h3 class="storytitle"><a href="/{{ entry.link }}" rel="bookmark">{{entry.title}}</a></h3>
+
+        <div class="storycontent">
+                {{ entry.content }}
+        </div><!-- end storycontent -->
+
+        <div class="meta">
+
+        Written by {{blog.author}} in {%for cate in entry.categories%} <a href="/category/{{cate.slug}}">{{cate.name}}</a> {%endfor%} 
+      {% if entry.strtags %}| Tags: {%for tag in entry.tags%}<a href="/tag/{{tag|urlencode}}">{{tag}}</a> {%endfor%}{%endif%}
+      {%if self.is_admin%}<a href= "{{entry.edit_url}}"> | Edit</a>  {%endif%}
+
+        </div><!-- end meta -->
+
+{% include "comments.html" %}
+
+     </div><!-- end storywrap -->
+
+</div><!-- end post -->
+
+{% else %}
+<div id="error">
+<p style="margin:100px 0 0 100px; font-weight:bold;">Sorry, no posts matched your criteria.</p>
+</div>
+{% endif %}
+{% endblock %}

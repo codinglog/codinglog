@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+{% block content%}
+{% if entries %}
+
+
+<!-- Container -->
+<div class="CON">
+
+<!-- Start SC -->
+<div class="SC">
+
+{% for entry in entries %}
+
+<div class="Post" id="post-{{entry.key}}" style="padding-bottom: 40px;">
+
+<div class="PostHead">
+<div class="PostTime">
+<strong class="day">{{entry.date|datetz:"d"}}</strong>
+<strong class="month">{{entry.date|datetz:"M"}}</strong>
+
+</div>
+<h2><a title="Permanent Link to {{entry.title}}" href="/{{ entry.link }}" rel="bookmark">{{entry.title}}</a></h2>
+<small class="PostAuthor">Author: Adam</small>
+<small class="PostCat">In: {%for cate in entry.categories%} <a href="/category/{{cate.slug}}">{{cate.name}}</a> {%endfor%} | {%if self.is_admin%}<a href="{{entry.edit_url}}">Edit</a> | {%endif%}  </small>
+</div>
+  
+<div class="PostContent">
+{{entry|excerpt_more:"(..More)"}}
+</div>
+
+
+<div class="PostCom">
+<ul>
+ <li class="Com"><a href="/{{entry.link}}#comments">Comments({{entry.commentcount}})&#187;</a></li>
+ <li class="Tags">{% if entry.strtags %}Tags: {%for tag in entry.tags%}<a href="/tag/{{tag|urlencode}}">{{tag}}</a> {%endfor%}<br><br>{%endif%}</li>
+</ul>
+</div>
+</div>
+{% endfor %}
+
+
+
+
+  
+<!-- Start Nav -->
+<div class="box">
+<div class="alignleft">{% if show_next %}<a href="/page/{{ pageindex|add:"1" }}"><img  src="/themes/{{ blog.theme_name }}/images/arbk.png">Older Entries</a>{%endif%}</div>
+<div class="alignright">{% if show_prev %}<a href="/page/{{ pageindex|add:"-1" }}"> Newer Entries<img  src="/themes/{{ blog.theme_name }}/images/arfw.png"></a>{%endif%}</div>
+<div class="clear"></div></div>
+<!-- End Nav -->
+
+{% else %}
+<h2>Not Found</h2>
+<p>Sorry, but you are looking for something that isn't here.</p>
+{% endif %}
+</div> 
+<!-- End SC -->
+
+{% include "sidebar.html" %}
+<!-- Container -->
+</div>
+{% endblock %}
+

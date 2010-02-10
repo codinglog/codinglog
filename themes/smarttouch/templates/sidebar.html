@@ -1,0 +1,106 @@
+<div class="SR">
+
+<!-- Start SideBar2 -->
+<div class="SRR">
+
+<div class="widget widget_categories">
+<h2>Comments</h2>
+<ul>
+    {% for comment in recent_comments %}
+    <li><a href="/{{comment.entry.link}}#comment-{{comment.key.id}}">{{comment.author}}:</a> {{comment.shortcontent}}...</li>
+    {%endfor%}
+        </ul>
+</div>
+
+
+<!-- Ad -->
+<div class="widget widget_archives">
+<h2>Thanks</h2>
+ <ul>
+<script type="text/javascript"><!--
+google_ad_client = "pub-1165694324336638";
+/* 250x250, 创建于 08-3-5 */
+google_ad_slot = "5660543297";
+google_ad_width = 250;
+google_ad_height = 250;
+//-->
+</script>
+<script type="text/javascript"
+src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script>
+ </ul>
+</div>
+<!-- Ad -->
+
+
+
+
+<!-- 热门-->
+<div class="widget widget_archives">
+<h2>It's Hot</h2>
+<ul>
+        {% for entry in blog.hotposts %}
+		<li><a href="/{{entry.link|escape}}" title="{{entry.title|escape}}">{{entry.title|escape}}({{entry.readtimes}})</a></li>
+        {%endfor%}
+	</ul>
+</div>
+<!-- End 热门 -->
+
+
+
+
+
+
+<!-- Start Recent Articles -->
+<div class="widget widget_archives">
+<h2>Recent Articles</h2>
+  <ul>
+        {% for entry in blog.recentposts %}
+		<li><a href="/{{entry.link|escape}}" title="{{entry.title|escape}}">{{entry.title|escape}}({{entry.readtimes}})</a></li>
+        {%endfor%}
+      </ul>
+</div>
+<!-- End Recent Articles -->
+
+
+
+
+
+
+<!-- Start Categories -->
+<div class="widget widget_categories">
+<h2>Categories</h2>
+ <ul>
+  {%for cate in categories%}
+  <li>	<a href="/category/{{cate.slug}}">{{cate.name}}({{cate.count}})</a></li>
+ 	{%endfor%}
+ </ul>
+</div>
+<!-- End Categories -->
+
+
+<div class="widget widget_meta">
+<h2>Tags</h2>
+{% for t in alltags %}
+<a title="{{ t.tagcount }} pages" href="/tag/{{t.tag|urlencode}}"><span style='font-size:{{ t.tagcount|add:9 }}px;'>{{t.tag}}</span></a>
+{%endfor%}
+</div>
+
+
+<!-- Start Links -->
+<div class="widget widget_categories">
+<h2>Links</h2>
+ <ul>
+ {%for link in blogroll%}
+<li><a href="{{link.href}}">{{link.linktext}}</a></li>
+{%endfor%}
+</ul>
+</div>
+<!-- End Links -->	
+
+
+
+</div>
+<!-- End SideBar2 -->
+
+</div>

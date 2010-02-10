@@ -1,0 +1,113 @@
+<!-- begin sidebar -->
+
+<div id="sidebar">
+
+<div id="search">
+<ul>
+ <li style="margin-top:0px;">
+   <form id="searchform" method="get" action="http://www.google.com/search">
+        <div>
+                <input type="text" name="q" id="s" size="11" />
+                <input name="as_q" value="site:{{ blog.baseurl }}" type="hidden"/>
+                <input type="image" src="/themes/{{ blog.theme_name }}/images/lens.png" title="search" alt="S" style="margin:0 0 -5px 3px;" />
+        </div>
+        </form>
+ </li>
+</ul>
+</div><!-- end search -->
+
+<ul>
+
+
+<!--
+ <li id="notice"><h3>Blog Notice</h3>
+        <ul>
+				{{blog.blognotice}}
+        </ul>
+ </li>
+-->
+
+
+<!--
+ <li id="recent_entries">
+  <h3>Recent Entries</h3>
+			{% if blog.recentposts %}
+			<ul>
+				{% for entry in blog.recentposts %}
+				<li><a href="/{{entry.link|escape}}" title="{{entry.title|escape}}">{{entry.title|escape}}</a>({{entry.readtimes}})</li>
+				{%endfor%}
+			</ul>
+			{% endif %}
+	</li>
+-->
+
+<!--
+ <li id="hot_entries">
+  <h3>Hot Entries</h3>
+    <ul>
+        {% for entry in blog.hotposts %}
+		<li><a href="/{{entry.link|escape}}" title="{{entry.title|escape}}">{{entry.title|escape}}({{entry.readtimes}})</a></li>
+        {%endfor%}
+	</ul>
+	</li>
+-->
+
+
+
+ <li id="comments"><h3>Recent Comments</h3>
+        <ul>
+	    {% for comment in recent_comments %}
+        <li><a href="/{{comment.entry.link}}#comment-{{comment.key.id}}">{{comment.author}}:{{comment.shortcontent}}...</a> </li>
+        {%endfor%}
+        </ul>
+ </li>
+ 
+  <li id="links"><h3>Links</h3>
+        <ul>
+        {%for link in blogroll%}
+<li><a href="{{link.href}}">{{link.linktext}}</a></li>
+{%endfor%}
+        </ul>
+ </li>
+ 
+
+ <li ><!--<h3>我关注的</h3>-->
+        <ul>
+<li>
+我在读的书
+<script type="text/javascript" src="http://www.douban.com/service/badge/fzuleishao/?show=dolist&amp;n=8&amp;columns=2&amp;hideself=yes&amp;cat=book" ></script> 
+
+</li>
+        </ul>
+ </li>
+
+ <li id="archives"><h3>Categories</h3>
+        <ul>
+ 	{%for cate in categories%}
+  <li>	<a href="/category/{{cate.slug}}">{{cate.name}}({{cate.count}})</a></li>
+ 	{%endfor%}
+        </ul>
+ </li>
+
+ <li id="archives"><h3>Archives</h3>
+        <ul>
+		{%for archive in archives%}
+		<li><a href="/{{archive.year}}/{{archive.month}}">{{archive.monthyear}}({{archive.entrycount}})</a></li>
+		{%endfor%}
+        </ul>
+ </li>
+ 
+  <li id="tags"><h3>Tags</h3>
+        <ul>
+      	{% for t in alltags %}
+	     <a href="/tag/{{t.tag|urlencode}}" title='{{ t.tagcount }} pages'><span style='font-size:{{t.tagcount|add:8 }}px;'>{{t.tag}}</span></a>
+	        {%endfor%}
+        </ul>
+ </li>
+
+
+
+
+</ul>
+
+</div><!-- end sidebar -->

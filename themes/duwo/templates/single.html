@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+{% block title %} {{entry.title|escape}} - {{blog.title|escape}} {% endblock %}
+{% block head_block %}
+{% if entry %}
+{%if entry.strtags%}<meta name="Keywords" content="{{entry.strtags|escape}}">{%endif%}
+{%if entry.excerpt%} <meta name="Description" content="{{entry.excerpt|escape}}">{%endif%}
+{% endif %}
+<script src="/static/js/jquery.form.utf8.js"></script>
+{% endblock %}
+{% block content %}
+
+<div id="content">
+<div id="postslist">
+    {% if entry %}
+    <div class="post" id="post-{{ entry.id }}">
+        <div class="title">
+            <h3>{{ entry.date|datetz:"F jS, Y " }}</h3>
+            <h2><a href="/{{ entry.link }}" rel="bookmark" title="Permanent Link to 
+{{ entry.title|escape}}">{{ entry.title|escape }}</a></h2>
+        </div>
+        <div class="entry">
+            {{ entry.content }}
+        </div>
+        {%if relateposts%}
+        <div id="similar_post"><h3>Related logs:</h3>
+            <ul>
+                {%for post in relateposts%}
+                <li><a href="/{{post.link}}">
+                    {{post.title}}</a></li>
+                {%endfor%}
+            </ul>
+        </div>
+        {%endif%}
+
+        <p class="postmetadata">
+            {{entry.readtimes}}次阅读
+            {% if entry.categories%}
+            Posted in 
+            {% for cate in entry.categories%} 
+            <a href="/category/{{cate.slug}}">
+{{cate.name}}</a>{%endfor%} | 
+            {%endif%}
+            {% if entry.tags%}
+            Tags: {%for tag in entry.tags%}
+            <a href="/tag/{{tag|urlencode}}">{{tag}}</a>
+            {%endfor%}
+            {%endif%}
+        </p>
+    </div>
+
+	{% include "comments.html" %}
+<!--    
+{% else %}
+ <p>Sorry, no posts matched your criteria.</p>
+{% endif %}
+-->
+</div>
+{% include "sidebar.html" %}
+</div>
+{% endblock %}

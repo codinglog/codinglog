@@ -1,0 +1,164 @@
+<div class="Comments">
+<div class="List">
+<!-- Start CommentsList-->
+
+
+<!-- You can start editing here. -->
+
+{% if entry.comments.count%}
+<h3 id="comments" >{{entry.comments.count}} Responses to &#8220;{{entry.title}}&#8221;</h3>
+
+<ol id="commentlist">
+
+{% for comment in comments %}
+
+<li class="{%cycle alt1,alt %}" id="comment-{{comment.key.id}}">
+<div class="LGrav"><a href="{{comment.weburl}}" rel="nofollow" target="_blank"><img height="50" width="50" class="avatar avatar-50" src="{{comment.gravatar_url}}" alt=""/></div>
+<p class="LUsr"><strong><a href="{{comment.weburl}}" rel="nofollow" target="_blank">{{comment.author}}</a></strong><br />
+ <a href="#comment-{{comment.key.id}}" title="">{{comment.date.date|datetz:"Y-m-d"}} at {{comment.date|datetz:"H:i"}}</a> </p>
+<div class="LCon">
+{{comment.content}}
+
+</div>
+
+<div class="clear"></div>
+
+</li>
+
+{%endfor%}
+{% else %}
+			 
+		       32424234
+</ol>
+
+
+
+{%endif%}
+
+<!-- Start Nav -->
+<div class="box">
+{{comments_nav.nav}}
+</div>
+<!-- End Nav -->
+
+</div>
+
+
+
+
+<h3 id="respond">Leave a reply</h3> 
+<div class="Form"><div class="FormTop"></div>
+
+ <form action="/post_comment" method="post" id="commentform">
+
+
+<br clear="all" />
+
+<p>
+<label for="author">
+<small>Name(required)<span style='color:red'>*</span></small>
+<input type="text" name="author" id="author" value="{{user_name}}" tabindex="1" class="TextField Name" style="width: 310px; background: #e9f8ff url(/themes/{{ blog.theme_name }}/images/FormName.png) no-repeat left top" />
+</label>
+</p>
+		
+<p>
+<label for="email">
+<small>E-mail(will not be published) (required)<span style='color:red'>*</span></small>
+<input type="text" name="email" id="email" value="{{user_email}}" tabindex="2" class="TextField"  style="width: 310px; background: #e9f8ff url(/themes/{{ blog.theme_name }}/images/FormEmail.png) no-repeat left top" />
+</label>
+</p>
+		
+<p>
+<label for="url">
+<small><abbr title="Uniform Resource Identifier">Website</abbr></small>
+<input type="text" name="url" id="url" value="{{user_url}}" tabindex="3" class="TextField URI" style="width: 310px; background: #e9f8ff url(/themes/{{ blog.theme_name }}/images/FormURI.png) no-repeat left top" />
+</label>
+</p>
+
+
+<p id="checkarea"><span style="color:#D50000" id="disp_check">{{checknum1}}+{{checknum2}}</span>
+<input type="hidden" name="checknum" id="checknum" value="{{checknum1}}+{{checknum2}}" />
+<input type="text" name="checkret" id="checkret" value="" size="5" tabindex="4" />
+</p>
+
+<p>
+<label><small>Message</small>
+
+<textarea name="comment" id="comment" rows="6" tabindex="4" class="TextArea" style="width: 330px;" cols="7"></textarea>
+</label>
+</p>
+<p><input name="SubmitComment" type="submit" class="SubmitComment" onmouseover="javascript:changeSty('SubmitCommentIE');" onmouseout="javascript:changeSty('SubmitComment');"  title="Post Your Comment" alt="Post Your Comment" />
+<input type="hidden" name="key" value="{{entry.key}}" /></p>
+
+
+</div>
+<div class="FormBottom"></div>
+
+
+</div>
+
+
+
+
+
+
+<script type="text/javascript" src="/static/js/jquery.cookie.js"></script>
+<script>
+    commentuser=$.cookie('comment_user');
+       if (commentuser)
+       {
+         [user,email,url]=commentuser.split('#@#');
+         $('#author').val(user);
+         $('#email').val(email);
+         $('#url').val(url);
+         $('#checkarea').hide();
+       }
+       else
+       {
+       	num1=Math.round(Math.random()*10);
+       	num2=Math.round(Math.random()*10);
+       	$('#checkarea #checknum').val(num1+'+'+num2);
+       	$('#checkarea #disp_check').text(num1+'+'+num2+'=');
+       	$('#checkarea').show();
+       }
+
+  $('#commentform').submit(function(){
+         var form = this;
+           if (form.author)
+  		   {
+
+      			 if (!form.author.value)
+          		 {
+          		  alert('Please input your name.');
+          		  form.author.focus();
+          		  return false;
+          		 }
+          		 if (!form.email.value)
+          		 {
+          		 	alert('Please input the email address.');
+          		 	form.email.focus();
+          		 	return false;
+          		 }
+	       }
+	        if ($('#checkarea').css('display')!='none')
+								       {
+							             if(eval(form.checknum.value)!=form.checkret.value)
+							             {
+							               alert('check code error');
+							               form.checkret.value='';
+							               form.checkret.focus();
+							               return false;
+							             }
+
+							           }
+
+      		 if (!form.comment.value)
+      		 {
+      		 	alert('Please leave some reply message.');
+      		 	form.comment.focus();
+      		 	return false;
+      		 }
+
+      		 return true;
+  });
+</script>

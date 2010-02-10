@@ -1,0 +1,88 @@
+﻿	</div><!-- content -->
+</div><!-- primary -->
+
+<div id="secondary">
+	<div class="content">
+		<div class="mysite_widget_divider">
+		    <div class="mysite_widget">	
+		        <h4>About Me</h4>	
+		        <ul>		
+                    
+    	        </ul>
+			</div>
+		</div>
+		<div class="mysite_widget_divider">
+		    <div class="mysite_widget">
+		        <h4>Feeds</h4>
+		        <ul>
+		            <li><a href="{{blog.baseurl}}/feed" target="_blank">Entries (RSS)</a></li>
+		            <li><a href="{{blog.baseurl}}/feed/comments" target="_blank">Comments (RSS)</a></li>
+                    <li><a href="http://www.google.com/reader/preview/*/feed/{{blog.feedurl}}" target="_blank">订阅到 <strong>Google Reader</strong></a></li>
+                    <li><a href="http://www.zhuaxia.com/add_channel.php?url={{blog.feedurl}}" target="_blank">订阅到 <strong>抓虾</strong></a></li>
+	                <li><a href="http://www.xianguo.com/subscribe.php?url={{blog.feedurl}}" target="_blank">订阅到 <strong>鲜果</strong></a></li>
+	                <li><a href="http://mail.qq.com/cgi-bin/feed?u={{blog.feedurl}}" target="_blank">订阅到 <strong>QQ</strong></a></li>
+                </ul>
+		    </div>
+		</div>
+		<div class="mysite_widget_divider">
+		    <div class="mysite_widget">
+		        <h4>Popular Posts</h4>
+		        <ul>
+                    {% for entry in blog.hotposts %}
+		            <li><a href="/{{entry.link}}">{{entry.title}}({{entry.readtimes}})</a></li>
+                    {%endfor%}
+                </ul>
+		    </div>
+		</div>
+		<div class="mysite_widget_divider">
+		    <div class="mysite_widget">
+		        <h4>Recent Posts</h4>
+		        <ul>
+                    {% for entry in blog.recentposts %}
+                    <li><a href="/{{entry.link}}">{{entry.title}}</a></li>
+                    {%endfor%}
+                </ul>
+		    </div>
+		</div>
+		<div class="mysite_widget_divider">
+		    <div class="mysite_widget">
+		        <h4>Recent Comments</h4>
+		        <ul>
+                    {% for comment in recent_comments %}
+                    <li><a href="/{{comment.entry.link}}#comment-{{comment.key.id}}">{{comment.author}}:{{comment.shortcontent}}...</a></li>
+                    {%endfor%}
+                </ul>
+		    </div>
+		</div>
+		<div class="mysite_widget_divider">
+		    <div class="mysite_widget">
+		        <h4>Categories</h4>
+		        <ul>
+                    {%for cate in categories%}
+                    <li><a href="/category/{{cate.slug}}">{{cate.name}}({{cate.count}})</a></li>
+                    {%endfor%}
+                </ul>
+		    </div>
+		</div>
+		<div class="mysite_widget_divider">
+		    <div class="mysite_widget">
+		        <h4>Archives</h4>
+		        <ul>
+                    {%for archive in archives%}
+		            <li><a href="/{{archive.year}}/{{archive.month}}">{{archive.monthyear}}({{archive.entrycount}})</a></li>
+		            {%endfor%}
+                </ul>
+		    </div>
+		</div>
+		<div class="mysite_widget_divider">
+		    <div class="mysite_widget">
+		        <h4>Blog roll</h4>
+		        <ul>
+                    {%for link in blogroll%}
+                    <li><a href="{{link.href}}" target="_blank">{{link.linktext}}</a></li>
+                    {%endfor%}
+                </ul>
+		    </div>
+		</div>
+	</div><!-- content -->
+</div><!-- secondary -->

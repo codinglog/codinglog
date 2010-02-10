@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% block title %} {{tag}} - {{blog.title}} {% endblock %}
+{% block content %}
+
+<div id="content">
+    <div id="postslist">
+        <div class="post">
+            <div class="archive">
+                <h2 class="title">Posts Tagged &#8216;  {{tag}} &#8217;</h2>
+            </div>
+            <div class="entry">
+                {% for entry in entries %}
+                <div class="arclist">
+                    <div class="lstitle">
+                        <h3>
+                {{ entry.date|datetz:"F jS, Y " }}</h3>
+                        <h2 id="post-{{ entry.id }}">
+                        <a href="/{{entry.link}}" 
+                            rel="bookmark"
+                            title="Permanent Link to 
+                            {{ entry.title|escape }}">
+                            {{ entry.title|escape }}</a></h2>
+                    </div>
+                    <p class="postmeta">Posted in 
+                    {%for cate in entry.categories%}
+    <a href="/category/{{cate.slug}}">{{cate.name}}</a>
+    {%endfor%} | 
+    <a href="/{{entry.link}}#comments">
+        {{entry.commentcount}} Comments &#187;</a></p>
+                    <hr />
+                </div>
+                {%endfor%}
+            </div>
+        </div>
+
+
+
+
+    	<div class="navigation"><div class="alignright">
+			{% if pager.next %}
+			<a href="?page={{ pager.next }}">&laquo;Previous Entries</a>
+			{% endif %}</div><div class="alignleft">
+			{% if pager.prev %}
+			<a href="?page={{ pager.prev}}">Next Entries &raquo;</a>
+			{% endif %}</div>
+        </div>
+        <div style="clear:both"></div>
+    </div>
+
+    {% include "sidebar.html" %}
+        
+      </div>   
+{% endblock %}

@@ -1,0 +1,77 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head profile="http://gmpg.org/xfn/11">
+        <meta http-equiv="Content-Type" content="text-html; charset=utf-8;" />
+        <title>{% block title %} {{ blog.title}}{% endblock %}</title>
+        <link rel="alternate" type="application/atom+xml" title="Atom 1.0" href="{{ blog.feedurl }}" />
+        <style type="text/css" media="screen">
+                @import url( /themes/{{ blog.theme_name }}/style.css );
+        </style>
+</head>
+
+<body>
+
+<div id="rap">
+
+<div id="headmenu">
+
+        <ul>
+        
+    {%if self.is_admin%}
+     <li><a href="/admin">Admin</a> </li>
+    {%endif%}
+     {%if self.is_login%}
+      <li>
+       <a href="{{self.logouturl}}">Logout</a></li>
+
+     {%else%}
+     <li>
+       <a href="/admin">Login</a>
+        </li>
+     {%endif%}  
+            {{self.m_list_pages}}
+    {% block topmenu %}
+
+    {% endblock %}
+        <li><a href="{{ blog.baseurl }}/" title="Home">Home</a></li>
+        </ul>
+
+
+</div><!-- end headmenu -->
+
+<div id="header">
+
+<div id="headerleft">
+<h1><a href="{{ blog.baseurl }}/">{{blog.title}}</a></h1>
+<h2>{{blog.subtitle}}</h2>
+</div><!-- end headerleft -->
+
+<div id="headerright">
+<a href="{{blog.feedurl}}" title="GET MY FEED"></a>
+</div><!-- end headerright -->
+
+</div><!-- end header -->
+
+<div id="content">
+{%block content %}{%endblock%}
+
+<!-- begin footer -->
+</div><!-- end content -->
+
+
+{% include "sidebar.html" %}
+
+<!-- leave the footprint as it is -->
+<p class="footprint" >
+&copy; <a href="{{ blog.baseurl}}">leishao</a> | Powered by<a href="http://xuming.net"> Micolog</a> | Theme by <a href="http://theBuckmaker.com">TheBuckmaker.com</a>, Modified for Micolog by <a href="http://blog.judes.me/">Jude</a> 
+</p>
+
+<div id="tracker" style="display:none">
+<!-- Google Analytics -->
+</div>
+
+</div><!-- end rap -->
+
+</body>
+</html>
